@@ -18,16 +18,17 @@ class Tablero:
     # Genera nuevo tablero con el posicionamiento de los vehiculos actualizadoss
     def moverVehiculo(self, movimiento: Movimiento) -> "Tablero":
         indiceVehiculoSeleccionado = movimiento.inidiceVehiculo
-        vehiculoActualizado = self.vehiculos[indiceVehiculoSeleccionado].mover(
-            movimiento)
 
         # Generar nuevo posicionamiento de vehiculos
         vehiculosActualizados = (
             self.vehiculos[0: indiceVehiculoSeleccionado]
-            + [vehiculoActualizado]
+            + (self.vehiculos[movimiento.inidiceVehiculo].mover(movimiento),)
             + self.vehiculos[indiceVehiculoSeleccionado + 1:]
         )
         return replace(self, vehiculos=vehiculosActualizados)
+
+    def convert(list):
+        return tuple(list)
 
     # genera mapa de vehiculos indexados [llave: id_vehiculo, contenido: vehiculo: Vehiculo]
     @staticmethod
@@ -71,7 +72,7 @@ class Tablero:
 
             return Tablero(len(matriz), vehiculos=vehiculosDeNuevoTablero)
 
-    def esConfiguracionFinalFinal(self) -> bool:
+    def esConfiguracionFinal(self) -> bool:
         return self.vehiculos[VEHICULO_ROJO].casillas[VEHICULO_FRENTE][EJE_X] == self.ancho - 1
 
     # Minimo para despejar ruta del carro Rojo
@@ -148,3 +149,6 @@ class Tablero:
                 yield Movimiento(idVehiculo=vehiculo.id, inidiceVehiculo=indice, desplazamiento=-1)
             if casillaDelantera is not None:
                 yield Movimiento(idVehiculo=vehiculo.id, inidiceVehiculo=indice, desplazamiento=1)
+    
+    # def __hash__(self):
+    #     return hash(tuple(self.vehiculos))

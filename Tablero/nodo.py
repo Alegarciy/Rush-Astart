@@ -12,5 +12,5 @@ class Nodo:
     return self.valor < otroNodo.valor
 
 @dataclass(frozen=True)
-class childNode(Node):
-  parent: Nodo = Nodo()
+class NodoHijo(Nodo):
+  padre: Nodo = Nodo()

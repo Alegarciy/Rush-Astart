@@ -3,6 +3,7 @@ from Tablero.cosntantes import EJE_X, EJE_Y, VEHICULO_ATRAS, VEHICULO_FRENTE
 from Tablero.movimiento import Movimiento
 from Tablero.vehiculo import Vehiculo
 from Tablero.tablero import Tablero
+from Algoritmos.algoritmos import aEstrella
 
 # Importaciones de Archivo Lector
 from AdministradorDeArchivos.adminsitradorDeArchivos import AdministradorDeArchivos
@@ -46,21 +47,21 @@ vehiculoTablero = Vehiculo(0, [[1, 3], [1, 4]], True)
 camionTablero = Vehiculo(1, [[1, 4], [1, 4], [1, 5]], True)
 
 tablero = Tablero(6, [vehiculoTablero, camionTablero])
-tableroMovimientoActualizado = tablero.moverVehiculo(Movimiento(0, 0, 1))
-tableroMovimientoActualizado2 = tableroMovimientoActualizado.moverVehiculo(
-    Movimiento(1, 1, 2))
+#tableroMovimientoActualizado = tablero.moverVehiculo(Movimiento(0, 0, 1))
+#tableroMovimientoActualizado2 = tableroMovimientoActualizado.moverVehiculo(
+ #   Movimiento(1, 1, 2))
 
 
-print(
-    f'Vehiculos de tablero en posicion inicial: {tablero.vehiculos}'
-)
-print(
-    f'Vehiculos de tablero en posicion actualizada #1: {tableroMovimientoActualizado.vehiculos}'
-)
-print(
-    f'Vehiculos de tablero en posicion actualizada #2: {tableroMovimientoActualizado2.vehiculos}'
-)
-print('\n')
+# print(
+#     f'Vehiculos de tablero en posicion inicial: {tablero.vehiculos}'
+# )
+# print(
+#     f'Vehiculos de tablero en posicion actualizada #1: {tableroMovimientoActualizado.vehiculos}'
+# )
+# print(
+#     f'Vehiculos de tablero en posicion actualizada #2: {tableroMovimientoActualizado2.vehiculos}'
+# )
+# print('\n')
 
 # Lector: generar tablero
 
@@ -96,3 +97,7 @@ print(
 
 for movimeinto in tableroGenerado.getMovimientos():
     print(f'Movimiento: {movimeinto}')
+
+# Algoritmo: Prueba de algortimo estreslla
+
+aEstrella(tableroGenerado)
