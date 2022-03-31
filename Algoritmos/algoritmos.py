@@ -14,7 +14,7 @@ class NoSolutionFoundException(Exception):
 
 @dataclass(frozen=True)
 class Resultado:
-    nodoFinal: Nodo
+    nodoFinal: NodoHijo
     numeroDeEstadosVisitados: int
 
 
@@ -36,7 +36,6 @@ def aEstrella(tablero: Tablero, profundidadMaxima: int = 100) -> Resultado:
             tableroHijo = nodoActual.tablero.moverVehiculo(
                 movimiento=movimientoPosible)
 
-            # Todo: do it manually
             if tableroHijo not in nodosVisitados:
                 nodosVisitados.add(tableroHijo)
                 nodo = NodoHijo(
@@ -51,3 +50,15 @@ def aEstrella(tablero: Tablero, profundidadMaxima: int = 100) -> Resultado:
                     return Resultado(nodo, len(nodosVisitados))
 
     raise NoSolutionFoundException
+
+
+def getSolucionAEstrella(resultado: Resultado):
+    pasosDeSolucion = []
+    nodoResultado = resultado.nodoFinal
+    try:
+        while nodoResultado is not None:
+            pasosDeSolucion.insert(0, nodoResultado.tablero.vehiculos)
+            nodoResultado = nodoResultado.padre
+    except:  # el nodo ya no tiene hijos
+        pasosDeSolucion.insert(0, nodoResultado.tablero.vehiculos)
+        return pasosDeSolucion
