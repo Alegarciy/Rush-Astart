@@ -51,7 +51,7 @@ class Tablero:
     def generarTableroDeMatriz(matriz: List[List[int]]) -> "Tablero":
 
         # validacion de si la matriz es correcta
-        if(len(matriz) != 6 or len(matriz) != len(matriz[0])):
+        if(len(matriz) < 6 or len(matriz) is not len(matriz[0])):
             raise Exception(
                 "Error: la matriz del archivo no es una matriz de dimensiones 6x6"
             )
@@ -64,16 +64,21 @@ class Tablero:
                     esHorizontal = casillas[VEHICULO_ATRAS][0] == casillas[VEHICULO_FRENTE][0]
                     vehiculoGenerado = Vehiculo(
                         id=idVehiculo,
-                        casillas=casillas,
+                        casillas=tuple(casillas),
                         orientacionHorizontal=esHorizontal
                     )
                     vehiculosDeNuevoTablero = vehiculosDeNuevoTablero + \
                         (vehiculoGenerado, )
-
             return Tablero(len(matriz), vehiculos=vehiculosDeNuevoTablero)
 
     def esConfiguracionFinal(self) -> bool:
         return self.vehiculos[VEHICULO_ROJO].casillas[VEHICULO_FRENTE][EJE_X] == self.ancho - 1
+
+    def getCostoMinimo(self) -> int:
+        return(
+            len(self.getCasillasPorCubrir()) +
+            self.MinimoDePasosParaDespejarPaso()
+        )
 
     # Minimo para despejar ruta del carro Rojo
     def MinimoDePasosParaDespejarPaso(self) -> int:
@@ -145,10 +150,8 @@ class Tablero:
                     casillaTrasera = None
 
             # Todo: se asume para la solucion inicial que el desplazamiento solo puede ser 1
-            if casillaTrasera is not None:
-                yield Movimiento(idVehiculo=vehiculo.id, inidiceVehiculo=indice, desplazamiento=-1)
+
             if casillaDelantera is not None:
                 yield Movimiento(idVehiculo=vehiculo.id, inidiceVehiculo=indice, desplazamiento=1)
-    
-    # def __hash__(self):
-    #     return hash(tuple(self.vehiculos))
+            if casillaTrasera is not None:
+                yield Movimiento(idVehiculo=vehiculo.id, inidiceVehiculo=indice, desplazamiento=-1)
