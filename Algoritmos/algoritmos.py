@@ -31,7 +31,7 @@ def aEstrella(tablero: Tablero, profundidadMaxima: int = 100) -> Resultado:
 
     while len(listaOrdenada) & profundidad < profundidadMaxima:
         nodoActual = heapq.heappop(listaOrdenada)
-        profundidad = nodoActual.profundidad
+        profundidad = nodoActual.profundidad  # g(x)
         for movimientoPosible in nodoActual.tablero.getMovimientos():
             tableroHijo = nodoActual.tablero.moverVehiculo(
                 movimiento=movimientoPosible)
